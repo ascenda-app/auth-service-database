@@ -5,7 +5,7 @@
 -- en claro; no es una migracion de esquema ni un seed, sino reparacion de datos (DEVELOPMENT.md §8).
 --
 -- Debe replicar exactamente la regla de EmailPseudonymizer:
---   deleted+<sha256 hex del correo en mayusculas>@peaker.invalid, todo en minusculas
+--   deleted+<sha256 hex del correo en mayusculas>@ascenda.invalid, todo en minusculas
 -- SHA2() de MySQL devuelve hex en minusculas y Email.Create normaliza a minusculas, asi que
 -- el valor que escribe este script y el que escribe el codigo coinciden byte a byte.
 --
@@ -14,8 +14,8 @@
 START TRANSACTION;
 
 UPDATE `users`
-SET `email` = CONCAT('deleted+', SHA2(UPPER(`email`), 256), '@peaker.invalid')
+SET `email` = CONCAT('deleted+', SHA2(UPPER(`email`), 256), '@ascenda.invalid')
 WHERE `status` = 'Deleted'
-  AND `email` NOT LIKE 'deleted+%@peaker.invalid';
+  AND `email` NOT LIKE 'deleted+%@ascenda.invalid';
 
 COMMIT;
